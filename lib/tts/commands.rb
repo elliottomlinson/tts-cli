@@ -1,6 +1,11 @@
 require 'tts'
+require 'bundler/setup'
+require_relative '../templates/templates.rb'
 
 module Tts
+  TABLETOP_DIRECTORY_ENV_KEY = "TABLETOP_DIRECTORY"
+  SAVED_OBJECTS_DIRECTORY = "tts-cli"
+
   module Commands
     Registry = CLI::Kit::CommandRegistry.new(
       default: 'help',
