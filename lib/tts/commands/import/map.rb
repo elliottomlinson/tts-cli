@@ -4,59 +4,58 @@ require 'csv'
 module Tts
   module Commands
     class ImportMap < Tts::Command
-      MAP_DIRECTORY = "maps"
       TILE_URL_TEMPLATE = "https://dummyimage.com/100x100/%{hex}/&text=%{text}"
       TILE_BACK_URL = "https://raw.githubusercontent.com/elliottomlinson/tts-cli/master/res/tile/back.png"
       TILE_OBJECT_NAME = "Custom_Tile"
       SCALE = 0.99
       MAP_TAG = "map"
-      MAGIC_TEXT_CODE = "%99"
-
+      MAGIC_EMPTY_TEXT = "%99"
 
       def call(args, _name)
         tabletop_directory = ENV[Tts::TABLETOP_DIRECTORY_ENV_KEY]
         raise "You need to set the ENV key #{Tts::TABLETOP_DIRECTORY_ENV_KEY} with your tabletop saved objects folder" unless tabletop_directory
 
-        raise self.class.help unless args.length == 1
+        session = Session.load!(Dir.pwd) 
+        storage_adaptor = SavedObjectsStorage.new(tabletop_directory, session)
 
-        map_raw_file_path = args[0] 
-        map_name = File.basename(map_raw_file_path).chomp(".csv")
+        if session.maps.length == 0
+          puts "No maps found in current session directory"
+        end
 
-        map = Map.from_csv(map_raw_file_path)
+        session.maps.each do |map_file_path|
+          puts "Importing #{map_file_path}..."
+          map_name = File.basename(map_file_path).chomp(".csv")
 
-        map_object = ::Templates::Base.new 
-        map_object.object_states = map.tiles.map.with_index do |tile_row, row_index|
-          tile_row.map.with_index do |tile, column_index|
-            next if tile.nil?
+          map = Map.from_csv(map_file_path)
 
-            {
-              object_name: TILE_OBJECT_NAME,
-              scale: SCALE, 
-              posX: x_position(column_index),
-              posZ: z_position(row_index),
-              nickname: tile.name,
-              description: tile.description || "",
-              notes: tile.notes || "",
-              tag: MAP_TAG, 
-              image_url: TILE_URL_TEMPLATE % { hex: tile.color[1..], text: MAGIC_TEXT_CODE },
-              back_url: TILE_BACK_URL 
-            }
-          end.compact
-        end.flatten
+          map_object = ::Templates::Base.new 
+          map_object.object_states = map.tiles.map.with_index do |tile_row, row_index|
+            tile_row.map.with_index do |tile, column_index|
+              next if tile.nil?
 
-        saved_object_content = map_object.render
+              {
+                object_name: TILE_OBJECT_NAME,
+                scale: SCALE, 
+                posX: x_position(column_index),
+                posZ: z_position(row_index),
+                nickname: tile.name,
+                description: tile.description || "",
+                notes: tile.notes || "",
+                tag: MAP_TAG, 
+                image_url: TILE_URL_TEMPLATE % { hex: tile.color[1..], text: MAGIC_EMPTY_TEXT },
+                back_url: TILE_BACK_URL 
+              }
+            end.compact
+          end.flatten
 
-        map_directory_path = File.join(tabletop_directory, Tts::SAVED_OBJECTS_DIRECTORY, MAP_DIRECTORY)
+          saved_object_content = map_object.render
 
-        FileUtils.mkdir_p(map_directory_path)
-        
-        map_file_path = File.join(map_directory_path, "#{map_name}.json")
-
-        File.write(map_file_path, saved_object_content)
+          storage_adaptor.save_map(saved_object_content, map_name)
+        end
       end
 
       def self.help
-        "Import a tile map file into Tabletop Simulator.\nUsage: {{command:#{Tts::TOOL_NAME} importMap path/to/map.csv}}"
+        "Import all tile map files in the current session directory into Tabletop Simulator.\nUsage: {{command:#{Tts::TOOL_NAME} importMap}}"
       end
 
       private
