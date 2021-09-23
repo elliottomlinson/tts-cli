@@ -1,20 +1,22 @@
+require "json"
+
 module Tts
-	class SessionRepository
+	class Session
 		def initialize(path)
 			@path = path
 		end
 
-		def self.load_session!(path)
-			repo = new(path)
+		def self.load!(path)
+			session = new(path)
 
-			unless File.exists?(repo.config_path)
-				raise "No config file found at #{repo.config_path}. Create a session with the `init` command and cd into it."
+			unless File.exists?(session.config_path)
+				raise "No config file found at #{session.config_path}. Create a session with the `init` command and cd into it."
 			end
 
-		  repo	
+		  session	
 		end
 
-		def self.create_session(path, name)
+		def self.build(path, name)
 			repo = new(path)
 
 			config = Templates::Config.new
@@ -30,6 +32,14 @@ module Tts
 			end
 		end
 
+		def config
+			@config ||= JSON.parse(File.read(config_path))
+		end
+
+		def name
+			config["sessionName"]
+		end
+
 		def config_path
 			File.join(@path, 'config.json')
 		end
@@ -37,8 +47,5 @@ module Tts
 		def map_directory_path
 			File.join(@path, 'maps')
 		end
-
-		private
-
 	end
 end

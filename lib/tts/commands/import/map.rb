@@ -4,7 +4,6 @@ require 'csv'
 module Tts
   module Commands
     class ImportMap < Tts::Command
-      MAP_DIRECTORY = "maps"
       TILE_URL_TEMPLATE = "https://dummyimage.com/100x100/%{hex}/&text=%{text}"
       TILE_BACK_URL = "https://raw.githubusercontent.com/elliottomlinson/tts-cli/master/res/tile/back.png"
       TILE_OBJECT_NAME = "Custom_Tile"
@@ -16,11 +15,14 @@ module Tts
         tabletop_directory = ENV[Tts::TABLETOP_DIRECTORY_ENV_KEY]
         raise "You need to set the ENV key #{Tts::TABLETOP_DIRECTORY_ENV_KEY} with your tabletop saved objects folder" unless tabletop_directory
 
-        session_repo = SessionRepository.load_session!(Dir.pwd) 
+        session = Session.load!(Dir.pwd) 
+        storage_adaptor = SavedObjectsStorage.new(tabletop_directory, session)
 
-        puts session_repo.maps
+        if session.maps.length == 0
+          puts "No maps found in current session directory"
+        end
 
-        session_repo.maps.each do |map_file_path|
+        session.maps.each do |map_file_path|
           puts "Importing #{map_file_path}..."
           map_name = File.basename(map_file_path).chomp(".csv")
 
@@ -48,13 +50,7 @@ module Tts
 
           saved_object_content = map_object.render
 
-          map_directory_path = File.join(tabletop_directory, Tts::SAVED_OBJECTS_DIRECTORY, MAP_DIRECTORY)
-
-          FileUtils.mkdir_p(map_directory_path)
-          
-          map_file_path = File.join(map_directory_path, "#{map_name}.json")
-
-          File.write(map_file_path, saved_object_content)
+          storage_adaptor.save_map(saved_object_content, map_name)
         end
       end
 

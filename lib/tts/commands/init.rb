@@ -7,7 +7,7 @@ module Tts
 				return self.help unless args.length == 1
 				name = args[0]
 
-				SessionRepository.create_session(name, name)
+				Session.build(name, name)
 
 				puts "Created session in #{name}. Change into the session directory to use import commands."
 			end
