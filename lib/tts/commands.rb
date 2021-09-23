@@ -1,6 +1,7 @@
 require 'tts'
 require 'bundler/setup'
 require_relative '../templates/templates.rb'
+require_relative './file_repository.rb'
 
 module Tts
   TABLETOP_DIRECTORY_ENV_KEY = "TABLETOP_DIRECTORY"
@@ -18,6 +19,7 @@ module Tts
     end
 
     register :ImportMap, 'importMap', 'tts/commands/import/map'
+    register :Init, 'init', 'tts/commands/init'
     register :Help,    'help',    'tts/commands/help'
   end
 end
