@@ -4,11 +4,13 @@ require 'csv'
 module Tts
   module Commands
     class Import < Tts::Command
-      def call(args, _name)
+      def call(_args, _name)
         tabletop_directory = ENV[Tts::TABLETOP_DIRECTORY_ENV_KEY]
-        raise "You need to set the ENV key #{Tts::TABLETOP_DIRECTORY_ENV_KEY} with your tabletop saved objects folder" unless tabletop_directory
+        unless tabletop_directory
+          raise "You need to set the ENV key #{Tts::TABLETOP_DIRECTORY_ENV_KEY} with your tabletop saved objects folder"
+        end
 
-        session = Session.load!(Dir.pwd) 
+        session = Session.load!(Dir.pwd)
         storage_adaptor = SavedObjectsStorage.new(tabletop_directory, session)
 
         Tts::Importers::CharacterSets.new(session, storage_adaptor).import

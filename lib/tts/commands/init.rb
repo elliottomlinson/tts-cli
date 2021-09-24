@@ -3,19 +3,20 @@ require 'tts'
 module Tts
   module Commands
     class Init < Tts::Command
-			def call(args, _name)
-				return self.help unless args.length == 1
-				name = args[0]
+      def call(args, _name)
+        return help unless args.length == 1
 
-				Session.build(name, name)
+        name = args[0]
 
-				puts "Created session in #{name}."
-				puts "Change into the session directory to use import commands."
-			end
+        Session.build(name, name)
 
-			def self.help
-				"Initialize a new session directory. \nUsage: {{command:#{Tts::TOOL_NAME} init [session name]}}"
-			end
-		end
-	end
+        puts "Created session in #{name}."
+        puts 'Change into the session directory to use import commands.'
+      end
+
+      def self.help
+        "Initialize a new session directory. \nUsage: {{command:#{Tts::TOOL_NAME} init [session name]}}"
+      end
+    end
+  end
 end

@@ -2,14 +2,14 @@ require 'tts'
 require 'csv'
 
 module Tts
-  module Importers 
-    class BackgroundSets < BaseImporter 
-      BACKGROUND_OBJECT_NAME = "Custom_Token"
+  module Importers
+    class BackgroundSets < BaseImporter
+      BACKGROUND_OBJECT_NAME = 'Custom_Token'
       SCALE = 0.8
       ROWSIZE = 16
       IMGSCALE = 2
       ROTATION = 0
-      TAG = "bg"
+      TAG = 'bg'
 
       def import
         @session.background_sets.each do |background_set_file_path|
@@ -21,24 +21,25 @@ module Tts
 
           image_paths = Dir.children(background_set_file_path)
 
-          background_object = ::Templates::Base.new 
-          background_object.object_states = image_paths.map do |image_path| 
-            next unless image_path.end_with?(".png")
-            background_name = image_path.chomp(".png")
+          background_object = ::Templates::Base.new
+          background_object.object_states = image_paths.map do |image_path|
+            next unless image_path.end_with?('.png')
 
-            image_url = @session.background_set_uri(set_name, background_name) 
+            background_name = image_path.chomp('.png')
+
+            image_url = @session.background_set_uri(set_name, background_name)
 
             state = {
               object_name: BACKGROUND_OBJECT_NAME,
-              scale: SCALE, 
+              scale: SCALE,
               posX: x_position(row_index),
               posZ: z_position(column_index),
               nickname: background_name,
-              description: "",
-              notes: "",
-              tag: TAG, 
+              description: '',
+              notes: '',
+              tag: TAG,
               image_url: image_url,
-              back_url: image_url, 
+              back_url: image_url,
               darken: false
             }
 
@@ -49,7 +50,7 @@ module Tts
 
           saved_object_content = background_object.render
 
-          set_thumbnail_path = File.join(background_set_file_path, image_paths[0]) 
+          set_thumbnail_path = File.join(background_set_file_path, image_paths[0])
 
           @storage_adaptor.save_background_set(saved_object_content, set_name, set_thumbnail_path)
         end
@@ -59,9 +60,9 @@ module Tts
 
       def next_available_position(row_index, column_index)
         if row_index < ROWSIZE
-          [row_index+1, column_index]
+          [row_index + 1, column_index]
         else
-          [0, column_index+1]
+          [0, column_index + 1]
         end
       end
 

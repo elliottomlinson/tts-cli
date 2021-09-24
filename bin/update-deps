@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-$LOAD_PATH.unshift(File.expand_path("../../vendor/deps/cli-ui/lib", __FILE__))
+$LOAD_PATH.unshift(File.expand_path('../vendor/deps/cli-ui/lib', __dir__))
 require 'open3'
 require 'fileutils'
 
@@ -9,28 +9,28 @@ def fmt(tag, msg)
   # While we could pull in CLI::UI here, it makes it more difficult to
   # bootstrap a new project and to fix a broken vendor.
   fmt_msg = msg
-    .gsub(/{{yellow:(.*?)}}/,     "\x1b[33m\\1\x1b[31m")
-    .gsub(/{{green:(.*?)}}/,      "\x1b[32m\\1\x1b[31m")
-    .gsub(/{{blue:(.*?)}}/,       "\x1b[34m\\1\x1b[31m")
-    .gsub(/{{bold_blue:(.*?)}}/,  "\x1b[1;34m\\1\x1b[0;31m")
-    .gsub(/{{bold_green:(.*?)}}/, "\x1b[1;32m\\1\x1b[0;31m")
+            .gsub(/{{yellow:(.*?)}}/,     "\x1b[33m\\1\x1b[31m")
+            .gsub(/{{green:(.*?)}}/,      "\x1b[32m\\1\x1b[31m")
+            .gsub(/{{blue:(.*?)}}/,       "\x1b[34m\\1\x1b[31m")
+            .gsub(/{{bold_blue:(.*?)}}/,  "\x1b[1;34m\\1\x1b[0;31m")
+            .gsub(/{{bold_green:(.*?)}}/, "\x1b[1;32m\\1\x1b[0;31m")
   "\x1b[1;31m[#{tag}] \x1b[0;31m#{fmt_msg}\x1b[0m"
 end
 
 def bail(msg)
-  STDERR.puts(fmt("ERROR", msg))
+  warn(fmt('ERROR', msg))
   exit 1
 end
 
 def warn(msg)
-  STDERR.puts(fmt("WARNING", msg))
+  warn(fmt('WARNING', msg))
 end
 
 def source_path
-  File.expand_path(ENV.fetch('SOURCE_ROOT', File.expand_path('../../..', __FILE__)))
+  File.expand_path(ENV.fetch('SOURCE_ROOT', File.expand_path('../..', __dir__)))
 end
 
-deps = %w(cli-ui cli-kit)
+deps = %w[cli-ui cli-kit]
 
 deps.each do |dep|
   path = File.expand_path(dep, source_path)
@@ -41,7 +41,7 @@ deps.each do |dep|
       "  This repo {{bold_blue:(github.com/shopify/#{dep})}} must be cloned at {{bold_blue:#{path}}} for this script to succeed.\n" \
       "  Currently, SOURCE_ROOT is set to {{bold_blue:#{source_path}}}.\n" \
       "  Alternatively, you can set {{bold_blue:SOURCE_ROOT}} to a directory containing {{yellow:#{dep}}}.\n" \
-      "  {{bold_blue:SOURCE_ROOT}} defaults to {{bold_blue:../}}."
+      '  {{bold_blue:SOURCE_ROOT}} defaults to {{bold_blue:../}}.'
     )
   end
 
@@ -88,7 +88,7 @@ deps.each do |dep|
   FileUtils.cp_r(srclib, dstlib)
 
   rev = head_sha
-  rev << " (dirty)" if dirty
+  rev << ' (dirty)' if dirty
   rev << "\n"
 
   File.write("#{depdir}/REVISION", rev)

@@ -9,11 +9,11 @@ module Tts
 
     def self.register(const, cmd, path)
       autoload(const, path)
-      Registry.add(->() { const_get(const) }, cmd)
+      Registry.add(-> { const_get(const) }, cmd)
     end
 
     register :Import, 'import', 'tts/commands/import'
     register :Init, 'init', 'tts/commands/init'
-    register :Help,    'help',    'tts/commands/help'
+    register :Help, 'help', 'tts/commands/help'
   end
 end

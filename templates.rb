@@ -4,7 +4,7 @@
 # todo: this properly
 # ------------------------------------------------------------------------------
 
-#require_relative "./dirs.rb"
+# require_relative "./dirs.rb"
 
 # ------------------------------------------------------------------------------
 # CHARACTER FIGURINES
@@ -18,7 +18,7 @@
 # rotation  rotation in degrees, 90 to face the dm
 # ------------------------------------------------------------------------------
 
-CHAR_OPEN = "{\"ObjectStates\":["
+CHAR_OPEN = '{"ObjectStates":['
 CHAR_ENTRY = "
 {
   \"Name\": \"Figurine_Custom\",
@@ -49,7 +49,7 @@ CHAR_ENTRY = "
   \"%{tag}\"
 ],
 },"
-CHAR_CLOSE = "]}"
+CHAR_CLOSE = ']}'
 
 # ------------------------------------------------------------------------------
 # ITEM CARD DECKS
@@ -70,7 +70,7 @@ CHAR_CLOSE = "]}"
 # backurl   item deck back image url
 # ------------------------------------------------------------------------------
 
-ITEM_OPEN = "{\"ObjectStates\":["
+ITEM_OPEN = '{"ObjectStates":['
 ITEM_ENTRY = "{
   \"Name\": \"CardCustom\",
   \"Transform\": {
@@ -106,7 +106,7 @@ ITEM_ENTRY = "{
   }
 },
 },"
-ITEM_CLOSE = "]}"
+ITEM_CLOSE = ']}'
 
 # ------------------------------------------------------------------------------
 # MAPS
@@ -118,7 +118,7 @@ ITEM_CLOSE = "]}"
 # backurl   underside of the tile, points to a graphic with the cardmaster logo
 # ------------------------------------------------------------------------------
 
-MAP_OPEN = "{\"ObjectStates\":["
+MAP_OPEN = '{"ObjectStates":['
 MAP_ENTRY = "
 {
   \"Name\": \"Custom_Tile\",
@@ -160,7 +160,7 @@ MAP_ENTRY = "
 \"LuaScriptState\": \"\",
 \"XmlUI\": \"\"
 },"
-MAP_CLOSE = "]}"
+MAP_CLOSE = ']}'
 
 # ------------------------------------------------------------------------------
 # BACKGROUND PICTURES
@@ -173,7 +173,7 @@ MAP_CLOSE = "]}"
 # url       location of the image on github
 # ------------------------------------------------------------------------------
 
-BG_OPEN = "{\"ObjectStates\":["
+BG_OPEN = '{"ObjectStates":['
 BG_ENTRY = "    {
 \"Name\": \"Custom_Token\",
 \"Transform\": {
@@ -195,7 +195,7 @@ BG_ENTRY = "    {
   \"%{tag}\"
 ],
 },"
-BG_CLOSE = "]}"
+BG_CLOSE = ']}'
 
 # ------------------------------------------------------------------------------
 # STATED TOKEN OBJECTS
@@ -207,7 +207,7 @@ BG_CLOSE = "]}"
 # statenum  identifies unique states of the object to write to
 # ------------------------------------------------------------------------------
 
-STATED_OPEN = "{\"ObjectStates\":["
+STATED_OPEN = '{"ObjectStates":['
 STATED_ENTRY_FIRST = "{
 \"Name\": \"Custom_Token\",
 \"Transform\": {
@@ -232,7 +232,7 @@ STATED_ENTRY_FIRST = "{
 \"LuaScriptState\": \"\",
 \"XmlUI\": \"\",
 \"States\": {"
-STATED_ENTRY =         "\"%{statenum}\": {
+STATED_ENTRY = "\"%{statenum}\": {
 \"GUID\": \"4b8ee6\",
 \"Name\": \"Custom_Token\",
 \"Transform\": {
@@ -270,4 +270,4 @@ STATED_ENTRY =         "\"%{statenum}\": {
 \"LuaScriptState\": \"\",
 \"XmlUI\": \"\"
 },"
-STATED_CLOSE = "}}]}"
+STATED_CLOSE = '}}]}'
