@@ -1,6 +1,7 @@
 module Tts
 	class SavedObjectsStorage
 		MAP_DIRECTORY = "maps"
+		FILE_DIRECTORY = "files"
 		CHARACTER_DIRECTORY = "characters"
 		BACKGROUND_DIRECTORY = "backgrounds"
 		ITEM_DIRECTORY = "items"
@@ -63,6 +64,13 @@ module Tts
 			FileUtils.cp(set_thumbnail_path, thumbnail_path)
 		end
 
+		def save_files
+			file_directory_path = File.join(session_path, FILE_DIRECTORY)
+
+			FileUtils.mkdir_p(file_directory_path)
+			
+			FileUtils.cp_r(@session.files, file_directory_path)
+		end
 
 		private
 

@@ -59,6 +59,12 @@ module Tts
 			end
 		end
 
+		def files
+			(Dir.children(files_path) - ['.','..']).map do |entry|
+				File.join(files_path, entry)
+			end
+		end
+
 		def config
 			@config ||= JSON.parse(File.read(config_path))
 		end
@@ -105,6 +111,10 @@ module Tts
 
 		def item_set_directory_path
 			File.join(@path, 'items')
+		end
+
+		def files_path
+			File.join(@path, 'files')
 		end
 	end
 end
