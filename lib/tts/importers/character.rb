@@ -2,8 +2,8 @@ require 'tts'
 require 'csv'
 
 module Tts
-  module Commands
-    class ImportCharacters < Tts::Command
+  module Importers
+    class CharacterSets < BaseImporter
       CHARACTER_OBJECT_NAME = "Figurine_Custom"
       SCALE = 0.7
       ROWSIZE = 16
@@ -11,20 +11,9 @@ module Tts
       ROTATION = 0
       TAG = "char"
 
-      def call(args, _name)
-        tabletop_directory = ENV[Tts::TABLETOP_DIRECTORY_ENV_KEY]
-        raise "You need to set the ENV key #{Tts::TABLETOP_DIRECTORY_ENV_KEY} with your tabletop saved objects folder" unless tabletop_directory
-
-        session = Session.load!(Dir.pwd) 
-        storage_adaptor = SavedObjectsStorage.new(tabletop_directory, session)
-
-        if session.character_sets.length == 0
-          puts "No character sets found in current session directory"
-        end
-
-        session.character_sets.each do |character_set_file_path|
+      def import
+        @session.character_sets.each do |character_set_file_path|
           set_name = File.basename(character_set_file_path)
-          puts "Importing #{set_name}..."
 
           row_index = 0
           column_index = 0
@@ -36,7 +25,7 @@ module Tts
             next unless image_path.end_with?(".png")
             character_name = image_path.chomp(".png")
 
-            image_url = session.character_set_uri(set_name, character_name) 
+            image_url = @session.character_set_uri(set_name, character_name) 
 
             state = {
               object_name: CHARACTER_OBJECT_NAME,
@@ -61,12 +50,8 @@ module Tts
 
           set_thumbnail_path = File.join(character_set_file_path, image_paths[0]) 
 
-          storage_adaptor.save_character_set(saved_object_content, set_name, set_thumbnail_path)
+          @storage_adaptor.save_character_set(saved_object_content, set_name, set_thumbnail_path)
         end
-      end
-
-      def self.help
-        "Import all tile map files in the current session directory into Tabletop Simulator.\nUsage: {{command:#{Tts::TOOL_NAME} importMap}}"
       end
 
       private

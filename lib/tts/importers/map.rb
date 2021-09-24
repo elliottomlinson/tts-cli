@@ -2,8 +2,8 @@ require 'tts'
 require 'csv'
 
 module Tts
-  module Commands
-    class ImportMaps < Tts::Command
+  module Importers 
+    class Maps < BaseImporter 
       TILE_URL_TEMPLATE = "https://dummyimage.com/100x100/%{hex}/&text=%{text}"
       TILE_BACK_URL = "https://raw.githubusercontent.com/elliottomlinson/tts-cli/master/res/tile/back.png"
       TILE_OBJECT_NAME = "Custom_Tile"
@@ -11,18 +11,8 @@ module Tts
       MAP_TAG = "map"
       MAGIC_EMPTY_TEXT = "%99"
 
-      def call(args, _name)
-        tabletop_directory = ENV[Tts::TABLETOP_DIRECTORY_ENV_KEY]
-        raise "You need to set the ENV key #{Tts::TABLETOP_DIRECTORY_ENV_KEY} with your tabletop saved objects folder" unless tabletop_directory
-
-        session = Session.load!(Dir.pwd) 
-        storage_adaptor = SavedObjectsStorage.new(tabletop_directory, session)
-
-        if session.maps.length == 0
-          puts "No maps found in current session directory"
-        end
-
-        session.maps.each do |map_file_path|
+      def import 
+        @session.maps.each do |map_file_path|
           puts "Importing #{map_file_path}..."
           map_name = File.basename(map_file_path).chomp(".csv")
 
@@ -51,12 +41,8 @@ module Tts
 
           saved_object_content = map_object.render
 
-          storage_adaptor.save_map(saved_object_content, map_name)
+          @storage_adaptor.save_map(saved_object_content, map_name)
         end
-      end
-
-      def self.help
-        "Import all tile map files in the current session directory into Tabletop Simulator.\nUsage: {{command:#{Tts::TOOL_NAME} importMap}}"
       end
 
       private
