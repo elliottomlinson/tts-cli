@@ -24,6 +24,7 @@ module Tts
 
 			FileUtils.mkdir_p(repo.map_directory_path)
 			FileUtils.mkdir_p(repo.character_set_directory_path)
+			FileUtils.mkdir_p(repo.item_set_directory_path)
 			File.write(repo.config_path, config.render)
 		end
 
@@ -36,6 +37,14 @@ module Tts
 		def character_sets
 			(Dir.children(character_set_directory_path) - ['.','..']).map do |entry|
 				File.join(character_set_directory_path, entry)
+			end.select do |path|
+				File.directory?(path)
+			end
+		end
+
+		def item_sets
+			(Dir.children(item_set_directory_path) - ['.','..']).map do |entry|
+				File.join(item_set_directory_path, entry)
 			end.select do |path|
 				File.directory?(path)
 			end
@@ -58,8 +67,11 @@ module Tts
 		end
 
 		def character_set_uri(set_name, character_name)
-			puts File.join(srcBase, "/characters/", "/#{set_name}/", "#{character_name}.png")
 			File.join(srcBase, "/characters/", "/#{set_name}/", "#{character_name}.png")
+		end
+
+		def item_set_uri(set_name, item_name)
+			File.join(srcBase, "/items/", "/#{set_name}/", "#{item_name}.png")
 		end
 
 		def config_path
@@ -72,6 +84,10 @@ module Tts
 
 		def character_set_directory_path
 			File.join(@path, 'characters')
+		end
+
+		def item_set_directory_path
+			File.join(@path, 'items')
 		end
 	end
 end

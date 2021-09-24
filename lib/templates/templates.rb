@@ -7,6 +7,12 @@ module Templates
 
 	Base.template_file = File.join(__dir__, "base.mustache")
 
+	class Deck < Mustache
+		attr_accessor :object_states
+	end
+
+	Deck.template_file = File.join(__dir__, "deck.mustache")
+
 	class Config < Mustache
 		attr_accessor :sessionName
 	end

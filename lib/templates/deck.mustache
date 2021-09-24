@@ -1,0 +1,49 @@
+{
+	"ObjectStates": [
+		{{#object_states}}
+			{
+				"Name": "{{object_name}}",
+				"Transform": {
+					"posX": {{posX}},
+					"posY": 0,
+					"posZ": {{posZ}},
+					"rotX": 0,
+					"rotY": 0,
+					"rotZ": 0,
+					"scaleX": {{scale}},
+					"scaleY": 1.0,
+					"scaleZ": {{scale}}
+				},
+				"Nickname": "{{nickname}}",
+				"Description": "{{description}}",
+				"GMNotes": "{{notes}}",
+				"Tags": [
+					"{{tag}}"
+				],
+				"CardID": {{card_index}}00,
+				"ImageSecondaryURL":"{{backurl}}",
+				"SidewaysCard": false,
+				"CustomDeck": {
+					"{{card_index}}": {
+						"FaceURL": "{{face_url}}",
+						"BackURL": "{{back_url}}",
+						"NumWidth": 1,
+						"NumHeight": 1,
+						"BackIsHidden": true,
+						"UniqueBack": false,
+						"Type": 0
+					}
+				},
+				"ColorDiffuse": {
+					"r": 0.165505171,
+					"g": 0.165505171,
+					"b": 0.165505171
+				},
+				"GridProjection": true,
+				"LuaScript": "",
+				"LuaScriptState": "",
+				"XmlUI": ""
+		},
+		{{/object_states}}
+	]
+}

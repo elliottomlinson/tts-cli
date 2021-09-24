@@ -17,6 +17,7 @@ module Tts
       Registry.add(->() { const_get(const) }, cmd)
     end
 
+    register :ImportItems, 'importItems', 'tts/commands/import/item'
     register :ImportCharacters, 'importCharacters', 'tts/commands/import/character'
     register :ImportMaps, 'importMaps', 'tts/commands/import/map'
     register :Init, 'init', 'tts/commands/init'

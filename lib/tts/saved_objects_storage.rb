@@ -2,6 +2,7 @@ module Tts
 	class SavedObjectsStorage
 		MAP_DIRECTORY = "maps"
 		CHARACTER_DIRECTORY = "characters"
+		ITEM_DIRECTORY = "items"
 		BASE_DIRECTORY = "tts-cli"
 
 		def initialize(tts_directory, session)
@@ -29,6 +30,20 @@ module Tts
 			File.write(character_set_file_path, set)
 
 			thumbnail_path = File.join(character_directory_path, "#{set_name}.png")
+
+			FileUtils.cp(set_thumbnail_path, thumbnail_path)
+		end
+
+		def save_item_set(set, set_name, set_thumbnail_path)
+			item_directory_path = File.join(session_path, ITEM_DIRECTORY)
+
+			FileUtils.mkdir_p(item_directory_path)
+			
+			item_set_file_path = File.join(item_directory_path, "#{set_name}.json")
+
+			File.write(item_set_file_path, set)
+
+			thumbnail_path = File.join(item_directory_path, "#{set_name}.png")
 
 			FileUtils.cp(set_thumbnail_path, thumbnail_path)
 		end
