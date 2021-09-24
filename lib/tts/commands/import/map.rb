@@ -3,7 +3,7 @@ require 'csv'
 
 module Tts
   module Commands
-    class ImportMap < Tts::Command
+    class ImportMaps < Tts::Command
       TILE_URL_TEMPLATE = "https://dummyimage.com/100x100/%{hex}/&text=%{text}"
       TILE_BACK_URL = "https://raw.githubusercontent.com/elliottomlinson/tts-cli/master/res/tile/back.png"
       TILE_OBJECT_NAME = "Custom_Tile"
@@ -43,7 +43,8 @@ module Tts
                 notes: tile.notes || "",
                 tag: MAP_TAG, 
                 image_url: TILE_URL_TEMPLATE % { hex: tile.color[1..], text: MAGIC_EMPTY_TEXT },
-                back_url: TILE_BACK_URL 
+                back_url: TILE_BACK_URL,
+                darken: true 
               }
             end.compact
           end.flatten

@@ -23,6 +23,7 @@ module Tts
 			config.sessionName = name 
 
 			FileUtils.mkdir_p(repo.map_directory_path)
+			FileUtils.mkdir_p(repo.background_set_directory_path)
 			FileUtils.mkdir_p(repo.character_set_directory_path)
 			FileUtils.mkdir_p(repo.item_set_directory_path)
 			File.write(repo.config_path, config.render)
@@ -37,6 +38,14 @@ module Tts
 		def character_sets
 			(Dir.children(character_set_directory_path) - ['.','..']).map do |entry|
 				File.join(character_set_directory_path, entry)
+			end.select do |path|
+				File.directory?(path)
+			end
+		end
+
+		def background_sets
+			(Dir.children(background_set_directory_path) - ['.','..']).map do |entry|
+				File.join(background_set_directory_path, entry)
 			end.select do |path|
 				File.directory?(path)
 			end
@@ -70,6 +79,10 @@ module Tts
 			File.join(srcBase, "/characters/", "/#{set_name}/", "#{character_name}.png")
 		end
 
+		def background_set_uri(set_name, background_name)
+			File.join(srcBase, "/backgrounds/", "/#{set_name}/", "#{background_name}.png")
+		end
+
 		def item_set_uri(set_name, item_name)
 			File.join(srcBase, "/items/", "/#{set_name}/", "#{item_name}.png")
 		end
@@ -84,6 +97,10 @@ module Tts
 
 		def character_set_directory_path
 			File.join(@path, 'characters')
+		end
+
+		def background_set_directory_path
+			File.join(@path, 'backgrounds')
 		end
 
 		def item_set_directory_path

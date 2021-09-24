@@ -2,6 +2,7 @@ module Tts
 	class SavedObjectsStorage
 		MAP_DIRECTORY = "maps"
 		CHARACTER_DIRECTORY = "characters"
+		BACKGROUND_DIRECTORY = "backgrounds"
 		ITEM_DIRECTORY = "items"
 		BASE_DIRECTORY = "tts-cli"
 
@@ -30,6 +31,20 @@ module Tts
 			File.write(character_set_file_path, set)
 
 			thumbnail_path = File.join(character_directory_path, "#{set_name}.png")
+
+			FileUtils.cp(set_thumbnail_path, thumbnail_path)
+		end
+
+		def save_background_set(set, set_name, set_thumbnail_path)
+			background_directory_path = File.join(session_path, BACKGROUND_DIRECTORY)
+
+			FileUtils.mkdir_p(background_directory_path)
+			
+			background_set_file_path = File.join(background_directory_path, "#{set_name}.json")
+
+			File.write(background_set_file_path, set)
+
+			thumbnail_path = File.join(background_directory_path, "#{set_name}.png")
 
 			FileUtils.cp(set_thumbnail_path, thumbnail_path)
 		end

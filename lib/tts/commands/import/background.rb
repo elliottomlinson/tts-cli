@@ -3,13 +3,13 @@ require 'csv'
 
 module Tts
   module Commands
-    class ImportCharacters < Tts::Command
-      CHARACTER_OBJECT_NAME = "Figurine_Custom"
-      SCALE = 0.7
+    class ImportBackgrounds < Tts::Command
+      BACKGROUND_OBJECT_NAME = "Custom_Token"
+      SCALE = 0.8
       ROWSIZE = 16
       IMGSCALE = 2
       ROTATION = 0
-      TAG = "char"
+      TAG = "bg"
 
       def call(args, _name)
         tabletop_directory = ENV[Tts::TABLETOP_DIRECTORY_ENV_KEY]
@@ -18,38 +18,38 @@ module Tts
         session = Session.load!(Dir.pwd) 
         storage_adaptor = SavedObjectsStorage.new(tabletop_directory, session)
 
-        if session.character_sets.length == 0
-          puts "No character sets found in current session directory"
+        if session.background_sets.length == 0
+          puts "No background sets found in current session directory"
         end
 
-        session.character_sets.each do |character_set_file_path|
-          set_name = File.basename(character_set_file_path)
+        session.background_sets.each do |background_set_file_path|
+          set_name = File.basename(background_set_file_path)
           puts "Importing #{set_name}..."
 
           row_index = 0
           column_index = 0
 
-          image_paths = Dir.children(character_set_file_path)
+          image_paths = Dir.children(background_set_file_path)
 
-          character_object = ::Templates::Base.new 
-          character_object.object_states = image_paths.map do |image_path| 
+          background_object = ::Templates::Base.new 
+          background_object.object_states = image_paths.map do |image_path| 
             next unless image_path.end_with?(".png")
-            character_name = image_path.chomp(".png")
+            background_name = image_path.chomp(".png")
 
-            image_url = session.character_set_uri(set_name, character_name) 
+            image_url = session.background_set_uri(set_name, background_name) 
 
             state = {
-              object_name: CHARACTER_OBJECT_NAME,
+              object_name: BACKGROUND_OBJECT_NAME,
               scale: SCALE, 
               posX: x_position(row_index),
               posZ: z_position(column_index),
-              nickname: character_name,
+              nickname: background_name,
               description: "",
               notes: "",
               tag: TAG, 
               image_url: image_url,
-              back_url: image_url,
-              darken: false 
+              back_url: image_url, 
+              darken: false
             }
 
             row_index, column_index = next_available_position(row_index, column_index)
@@ -57,11 +57,11 @@ module Tts
             state
           end.compact
 
-          saved_object_content = character_object.render
+          saved_object_content = background_object.render
 
-          set_thumbnail_path = File.join(character_set_file_path, image_paths[0]) 
+          set_thumbnail_path = File.join(background_set_file_path, image_paths[0]) 
 
-          storage_adaptor.save_character_set(saved_object_content, set_name, set_thumbnail_path)
+          storage_adaptor.save_background_set(saved_object_content, set_name, set_thumbnail_path)
         end
       end
 
@@ -80,11 +80,11 @@ module Tts
       end
 
       def x_position(column_index)
-        column_index * 2
+        column_index * 4
       end
 
       def z_position(row_index)
-        row_index * -2
+        row_index * -4
       end
     end
   end

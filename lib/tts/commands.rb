@@ -18,6 +18,7 @@ module Tts
     end
 
     register :ImportItems, 'importItems', 'tts/commands/import/item'
+    register :ImportBackgrounds, 'importBackgrounds', 'tts/commands/import/background'
     register :ImportCharacters, 'importCharacters', 'tts/commands/import/character'
     register :ImportMaps, 'importMaps', 'tts/commands/import/map'
     register :Init, 'init', 'tts/commands/init'
