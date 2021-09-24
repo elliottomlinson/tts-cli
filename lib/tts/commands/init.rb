@@ -9,7 +9,8 @@ module Tts
 
 				Session.build(name, name)
 
-				puts "Created session in #{name}. Change into the session directory to use import commands."
+				puts "Created session in #{name}."
+				puts "Change into the session directory to use import commands."
 			end
 
 			def self.help
