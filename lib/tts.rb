@@ -9,6 +9,12 @@ module Tts
   TOOL_NAME = 'tts'
   ROOT      = File.expand_path('../..', __FILE__)
   LOG_FILE  = '/tmp/tts.log'
+  TABLETOP_DIRECTORY_ENV_KEY = "TABLETOP_DIRECTORY"
+
+  require_relative 'tts/session.rb'
+  require_relative 'tts/saved_objects_storage.rb'
+  require_relative 'tts/templates/templates.rb'
+  require_relative 'tts/importers/importers.rb'
 
   autoload(:EntryPoint, 'tts/entry_point')
   autoload(:Commands,   'tts/commands')

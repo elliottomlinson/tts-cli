@@ -1,12 +1,6 @@
 require 'tts'
-require_relative '../templates/templates.rb'
-require_relative './session.rb'
-require_relative './saved_objects_storage.rb'
-require_relative './importers/importers.rb'
 
 module Tts
-  TABLETOP_DIRECTORY_ENV_KEY = "TABLETOP_DIRECTORY"
-
   module Commands
     Registry = CLI::Kit::CommandRegistry.new(
       default: 'help',

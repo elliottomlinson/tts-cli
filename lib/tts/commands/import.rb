@@ -19,7 +19,7 @@ module Tts
       end
 
       def self.help
-        "Import all tile map files in the current session directory into Tabletop Simulator.\nUsage: {{command:#{Tts::TOOL_NAME} importMap}}"
+        "Import the files in the current session into your saved objects folder. \nUsage: {{command:#{Tts::TOOL_NAME} importMap}}"
       end
     end
   end
