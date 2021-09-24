@@ -1,5 +1,4 @@
 require 'tts'
-require 'bundler/setup'
 require_relative '../templates/templates.rb'
 require_relative './session.rb'
 require_relative './saved_objects_storage.rb'
@@ -18,7 +17,8 @@ module Tts
       Registry.add(->() { const_get(const) }, cmd)
     end
 
-    register :ImportMap, 'importMap', 'tts/commands/import/map'
+    register :ImportCharacters, 'importCharacters', 'tts/commands/import/character'
+    register :ImportMaps, 'importMaps', 'tts/commands/import/map'
     register :Init, 'init', 'tts/commands/init'
     register :Help,    'help',    'tts/commands/help'
   end
