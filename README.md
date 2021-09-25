@@ -8,9 +8,10 @@ Originally created to support games of https://github.com/elliottomlinson/cardma
 This installation was tested on OSX 11.6
 
 1. Clone this repository
-2. Install Tabletop Simulator on Steam
-3. Find your Tabletop Saved Objects directory. Example: "/Users/duncanuszkay/Library/Tabletop Simulator/Saves/Saved Objects"
-4. Run the following in your terminal:
+2. Install ruby 2.6.3
+3. Install Tabletop Simulator on Steam
+4. Find your Tabletop Saved Objects directory. Example: "/Users/duncanuszkay/Library/Tabletop Simulator/Saves/Saved Objects"
+5. Run the following in your terminal:
 ```bash
 export TABLETOP_DIRECTORY="path/to/saved/objects"
 TTS_CLI_PATH="/path/to/cloned/repository"
