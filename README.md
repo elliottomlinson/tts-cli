@@ -27,7 +27,7 @@ Maps of colored tiles that fit on a grid. Each tile can be given a name, and a d
 
 ![Screen Shot 2021-09-24 at 10 47 07 PM](https://user-images.githubusercontent.com/8670351/134755388-85e7cd76-d864-44c6-9f16-0edfd6a2b461.png)
 
-Map template: https://docs.google.com/spreadsheets/d/1KD_6Cewdq3Mxm0oegSlxZpCD4ZZbktvGfnAov_Gx_I8/edit#gid=1826420998
+Map template: https://docs.google.com/spreadsheets/d/1cA3XHLfNyQLGUVEVDyk0VWEguG9b8zqndC79Hlv3GjI/edit?usp=sharing
 
 The first character in the cell dictates the color, as shown in the palette. The entire string in the cell is matched against the legend to provide the name and description.
 
