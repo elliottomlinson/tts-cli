@@ -15,18 +15,20 @@ module Tts
     end
 
     def self.build(path, name)
-      repo = new(path)
+      session = new(path)
 
       config = Templates::Config.new
       config.sessionName = name
 
-      FileUtils.mkdir_p(repo.map_directory_path)
-      FileUtils.mkdir_p(repo.background_set_directory_path)
-      FileUtils.mkdir_p(repo.character_set_directory_path)
-      FileUtils.mkdir_p(repo.item_set_directory_path)
-      FileUtils.mkdir_p(repo.stated_token_directory_path)
-      FileUtils.mkdir_p(repo.stated_character_directory_path)
-      File.write(repo.config_path, config.render)
+      FileUtils.mkdir_p(session.map_directory_path)
+      FileUtils.mkdir_p(session.background_set_directory_path)
+      FileUtils.mkdir_p(session.character_set_directory_path)
+      FileUtils.mkdir_p(session.item_set_directory_path)
+      FileUtils.mkdir_p(session.stated_token_directory_path)
+      FileUtils.mkdir_p(session.stated_character_directory_path)
+      File.write(session.config_path, config.render)
+
+      session
     end
 
     def maps
