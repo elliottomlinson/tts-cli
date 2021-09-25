@@ -66,6 +66,10 @@ module Tts
 
           @storage_adaptor.save_stated_character(saved_object_content, character_name, set_thumbnail_path)
         end
+
+        @session.stated_characters.map do |path|
+          File.basename(path)
+        end
       end
     end
   end

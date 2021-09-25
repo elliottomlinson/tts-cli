@@ -14,7 +14,6 @@ module Tts
       def import
         @session.background_sets.each do |background_set_file_path|
           set_name = File.basename(background_set_file_path)
-          puts "Importing #{set_name}..."
 
           row_index = 0
           column_index = 0
@@ -53,6 +52,10 @@ module Tts
           set_thumbnail_path = File.join(background_set_file_path, image_paths[0])
 
           @storage_adaptor.save_background_set(saved_object_content, set_name, set_thumbnail_path)
+        end
+
+        @session.background_sets.map do |path|
+          File.basename(path)
         end
       end
 

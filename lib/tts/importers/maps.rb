@@ -13,7 +13,6 @@ module Tts
 
       def import 
         @session.maps.each do |map_file_path|
-          puts "Importing #{map_file_path}..."
           map_name = File.basename(map_file_path).chomp(".csv")
 
           map = Map.from_csv(map_file_path)
@@ -42,6 +41,10 @@ module Tts
           saved_object_content = map_object.render
 
           @storage_adaptor.save_map(saved_object_content, map_name)
+        end
+
+        @session.maps.map do |path|
+          File.basename(path).chomp(".csv")
         end
       end
 

@@ -67,6 +67,10 @@ module Tts
 
           @storage_adaptor.save_stated_token(saved_object_content, token_name, set_thumbnail_path)
         end
+
+        @session.stated_tokens.map do |path|
+          File.basename(path)
+        end
       end
     end
   end

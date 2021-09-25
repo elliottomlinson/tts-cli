@@ -14,7 +14,6 @@ module Tts
       def import
         @session.item_sets.each do |item_set_file_path|
           set_name = File.basename(item_set_file_path)
-          puts "Importing #{set_name}..."
           image_paths = Dir.children(item_set_file_path)
 
           back_path = image_paths.select { |path| path == 'back.png' }.first || image_paths[0]
@@ -50,6 +49,10 @@ module Tts
           set_thumbnail_path = File.join(item_set_file_path, image_paths[0])
 
           @storage_adaptor.save_item_set(saved_object_content, set_name, set_thumbnail_path)
+        end
+
+        @session.item_sets.map do |path|
+          File.basename(path)
         end
       end
     end

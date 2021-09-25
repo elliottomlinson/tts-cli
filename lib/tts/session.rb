@@ -6,12 +6,10 @@ module Tts
       @path = path
     end
 
-    def self.load!(path)
+    def self.load(path)
       session = new(path)
 
-      unless File.exist?(session.config_path)
-        raise "No config file found at #{session.config_path}. Create a session with the `init` command and cd into it."
-      end
+      return unless File.exist?(session.config_path)
 
       session
     end
