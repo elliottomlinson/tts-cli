@@ -5,7 +5,7 @@ module Tts
   module Importers
     class StatedCharacters < BaseImporter
       OBJECT_NAME = 'Figurine_Custom'
-      SCALE = 0.7
+      SCALE = 1
       ROTATION = 0
       TAG = 'char'
 
@@ -60,10 +60,7 @@ module Tts
             }
           ]
 
-
           saved_object_content = character_object.render
-
-          puts saved_object_content
 
           set_thumbnail_path = File.join(stated_character_file_path, image_paths[0])
 

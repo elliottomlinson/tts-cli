@@ -9,10 +9,10 @@ module Tts
   end
 end
 
-require_relative './background'
-require_relative './character'
+require_relative './background_sets'
+require_relative './character_sets'
 require_relative './stated_characters'
 require_relative './stated_tokens'
 require_relative './files'
-require_relative './item'
-require_relative './map'
+require_relative './item_sets'
+require_relative './maps'

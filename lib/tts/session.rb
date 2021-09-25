@@ -61,7 +61,6 @@ module Tts
       end
     end
 
-
     def background_sets
       (Dir.children(background_set_directory_path) - ['.', '..']).map do |entry|
         File.join(background_set_directory_path, entry)

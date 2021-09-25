@@ -63,8 +63,6 @@ module Tts
 
           saved_object_content = token_object.render
 
-          puts saved_object_content
-
           set_thumbnail_path = File.join(stated_token_file_path, image_paths[0])
 
           @storage_adaptor.save_stated_token(saved_object_content, token_name, set_thumbnail_path)
