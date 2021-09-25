@@ -18,4 +18,10 @@ module Templates
   end
 
   Config.template_file = File.join(__dir__, 'config.mustache')
+
+  class States < Mustache
+    attr_accessor :states
+  end
+
+  States.template_file = File.join(__dir__, 'states.mustache')
 end

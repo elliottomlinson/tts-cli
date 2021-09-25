@@ -5,6 +5,8 @@ module Tts
     CHARACTER_DIRECTORY = 'characters'
     BACKGROUND_DIRECTORY = 'backgrounds'
     ITEM_DIRECTORY = 'items'
+    STATED_TOKEN_DIRECTORY = 'stated_token'
+    STATED_CHARACTER_DIRECTORY = 'stated_character'
     BASE_DIRECTORY = 'tts-cli'
 
     def initialize(tts_directory, session)
@@ -22,6 +24,20 @@ module Tts
       in_saved_objects_directory(CHARACTER_DIRECTORY) do
         File.write("#{set_name}.json", set)
         FileUtils.cp(set_thumbnail_path, "#{set_name}.png")
+      end
+    end
+
+    def save_stated_token(token, token_name, token_thumbnail_path)
+      in_saved_objects_directory(STATED_TOKEN_DIRECTORY) do
+        File.write("#{token_name}.json", token)
+        FileUtils.cp(token_thumbnail_path, "#{token_name}.png")
+      end
+    end
+
+    def save_stated_character(character, character_name, character_thumbnail_path)
+      in_saved_objects_directory(STATED_CHARACTER_DIRECTORY) do
+        File.write("#{character_name}.json", character)
+        FileUtils.cp(character_thumbnail_path, "#{character_name}.png")
       end
     end
 

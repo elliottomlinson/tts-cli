@@ -42,7 +42,51 @@
 				"GridProjection": true,
 				"LuaScript": "",
 				"LuaScriptState": "",
-				"XmlUI": ""
+				"XmlUI": "",
+				"States": {
+					{{#states}}
+						"{{index}}": { 
+							"GUID": "4b8ee6",
+							"Name": "{{name}}",
+							"Transform": {
+								"posX": {{posX}},
+								"posY": 0,
+								"posZ": {{posZ}},
+								"rotX": 0,
+								"rotY": 0,
+								"rotZ": 0,
+								"scaleX": {{scale}},
+								"scaleY": 1.0,
+								"scaleZ": {{scale}}
+							},
+							"Nickname": "{{nickname}}",
+							"Description": "{{description}}",
+							"GMNotes": "{{notes}}",
+							"ColorDiffuse": {
+							"r": 1.0,
+							"g": 1.0,
+							"b": 1.0
+							},
+							"CustomImage": {
+								"ImageURL": "{{image_url}}",
+								"ImageSecondaryURL": "{{back_url}}",
+								"ImageScalar": 1.0,
+								"WidthScale": 0.0,
+								{{#token}}
+								"CustomToken": {
+									"Thickness": 0.2,
+									"MergeDistancePixels": 15.0,
+									"StandUp": false,
+									"Stackable": false
+								}
+								{{/token}}
+							},
+							"LuaScript": "",
+							"LuaScriptState": "",
+							"XmlUI": ""
+						},
+					{{/states}}
+				}
 		},
 		{{/object_states}}
 	]

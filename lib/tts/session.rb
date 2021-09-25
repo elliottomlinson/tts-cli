@@ -26,6 +26,8 @@ module Tts
       FileUtils.mkdir_p(repo.background_set_directory_path)
       FileUtils.mkdir_p(repo.character_set_directory_path)
       FileUtils.mkdir_p(repo.item_set_directory_path)
+      FileUtils.mkdir_p(repo.stated_token_directory_path)
+      FileUtils.mkdir_p(repo.stated_character_directory_path)
       File.write(repo.config_path, config.render)
     end
 
@@ -42,6 +44,23 @@ module Tts
         File.directory?(path)
       end
     end
+
+    def stated_tokens
+      (Dir.children(stated_token_directory_path) - ['.', '..']).map do |entry|
+        File.join(stated_token_directory_path, entry)
+      end.select do |path|
+        File.directory?(path)
+      end
+    end
+
+    def stated_characters
+      (Dir.children(stated_character_directory_path) - ['.', '..']).map do |entry|
+        File.join(stated_character_directory_path, entry)
+      end.select do |path|
+        File.directory?(path)
+      end
+    end
+
 
     def background_sets
       (Dir.children(background_set_directory_path) - ['.', '..']).map do |entry|
@@ -86,6 +105,14 @@ module Tts
       File.join(srcBase, '/characters/', "/#{set_name}/", "#{character_name}.png")
     end
 
+    def stated_token_uri(token_name, state_name)
+      File.join(srcBase, '/stated_tokens/', "/#{token_name}/", "#{state_name}.png")
+    end
+
+    def stated_character_uri(character_name, state_name)
+      File.join(srcBase, '/stated_characters/', "/#{character_name}/", "#{state_name}.png")
+    end
+
     def background_set_uri(set_name, background_name)
       File.join(srcBase, '/backgrounds/', "/#{set_name}/", "#{background_name}.png")
     end
@@ -112,6 +139,14 @@ module Tts
 
     def item_set_directory_path
       File.join(@path, 'items')
+    end
+
+    def stated_token_directory_path
+      File.join(@path, 'stated_tokens')
+    end
+
+    def stated_character_directory_path
+      File.join(@path, 'stated_characters')
     end
 
     def files_path

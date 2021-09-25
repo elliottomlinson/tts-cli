@@ -11,6 +11,8 @@ end
 
 require_relative './background'
 require_relative './character'
+require_relative './stated_characters'
+require_relative './stated_tokens'
 require_relative './files'
 require_relative './item'
 require_relative './map'

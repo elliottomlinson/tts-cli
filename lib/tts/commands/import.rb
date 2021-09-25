@@ -18,6 +18,8 @@ module Tts
         Tts::Importers::ItemSets.new(session, storage_adaptor).import
         Tts::Importers::Maps.new(session, storage_adaptor).import
         Tts::Importers::Files.new(session, storage_adaptor).import
+        Tts::Importers::StatedTokens.new(session, storage_adaptor).import
+        Tts::Importers::StatedCharacters.new(session, storage_adaptor).import
       end
 
       def self.help
